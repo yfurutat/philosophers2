@@ -73,7 +73,7 @@ norma	:	norm normd normf
 
 commit			:
 	@$(MAKE) fclean
-	git add $(INC_PATH)*.h $(SRC) $(UTILS) Makefile test.sh philo_out.txt
+	git add $(INC_PATH)*.h $(SRC) $(UTILS) Makefile test.sh
 	git commit -m "commit through makefile"
 	git status
 
