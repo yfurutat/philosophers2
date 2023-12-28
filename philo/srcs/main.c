@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 10:51:34 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 21:36:11 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/28 22:32:44 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv)
 		destroy_data(&data);
 		return (ret);
 	}
-	usleep(1000);
+	usleep(300);
 	while (ret == OK)
 		ret = monitor_party(&data);
 	ret = party_over(&data);
