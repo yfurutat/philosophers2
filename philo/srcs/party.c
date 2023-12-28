@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:18:37 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 21:31:10 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/28 22:20:21 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	prep_party(int argc, char **argv, t_data *data)
     err_id = init(data);
 	if (err_id != OK)
 		return (err_id);
-    data->pr.start_time = get_time(NULL);
+    data->pr.start_time = get_time_stamp(NULL);
 	return (err_id);
 }
 
@@ -67,7 +67,7 @@ int	monitor_party(t_data *data)
 	while (i < (size_t)data->pr.num_philos)
 	{
 		pthread_mutex_lock(data->philos[i].dine);
-		if (get_time(NULL) - data->philos[i].last_eat_time > (t_time)data->pr.time_to_die)
+		if (get_time_stamp(NULL) - data->philos[i].last_eat_time > (t_time)data->pr.time_to_die)
 		{
 			print_msg(&data->philos[i], ACT_DEAD);
 			data->pr.the_end_status = true;

@@ -10,7 +10,6 @@ MAIN_FILE		:=	main.c \
 
 UTIL_FILES		:=	ft_atoll.c \
 					ft_isdigit.c \
-					ft_putstr.c \
 					utils.c
 
 SRC_PATH		:=	./srcs/

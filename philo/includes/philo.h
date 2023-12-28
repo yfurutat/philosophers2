@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 10:54:09 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 21:39:06 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/28 22:19:01 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ typedef struct s_param {
 	pthread_mutex_t	coffin_lock;
 	t_time 			start_time;
 }	t_param;
-	// time_t 		start_time;
-	// size_t		last;
 
 typedef struct s_philo {
 	long long		id;
@@ -107,15 +105,18 @@ int			start_party(t_data *data);
 int			monitor_party(t_data *data);
 int			party_over(t_data *data);
 
-int			parse_args(int argc, char **argv, t_param *pr);
-int			init(t_data *data);
-void		*act(void *param);
+int			parse_args(int argc, char **argv, t_param *pr); // complemental: 2
+int			init(t_data *data); // complemental: 1
+void		*act(void *param); // complemental: 4
 
+// DESTROY
 void		destroy_mutex_array(pthread_mutex_t *ptr, size_t num);
 int			destroy_data(t_data *data);
-int			print_msg(t_ph *philo, const char *action);
-time_t		get_time(int *err_ptr);
 
+int			print_msg(t_ph *philo, const char *action);
+time_t		get_time_stamp(int *err_ptr);
+
+// UTILS
 int			ft_isspace(int chr);
 int			ft_isdigit(int chr);
 int			ft_aredigit_strs(char **strs);

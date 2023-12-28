@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 19:47:24 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 18:16:39 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/28 22:19:58 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,6 @@ void *act(void *param)
     }
 	return (NULL);
 }
-	// long tid;
-	// tid = (long)threadid;
-	// philo->id = ;
-    	// pthread_exit(NULL);
-	// usleep(time_to_sleep);
-	// printf("is thinking\n");
-	// printf("has taken a fork\n");
 
 // 14L
 static int	_philo_pick_up_fork(t_ph *philo)
@@ -73,7 +66,7 @@ static int	_philo_eat(t_ph *philo)
 		return (E_DEAD);
 	}
 	pthread_mutex_lock(philo->dine);
-	philo->last_eat_time = get_time(NULL);
+	philo->last_eat_time = get_time_stamp(NULL);
 	usleep(philo->pr->time_to_eat * 1000);
 	philo->eat_times++;
 	pthread_mutex_unlock(philo->dine);

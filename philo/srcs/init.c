@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 15:44:24 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 18:17:08 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/28 22:05:08 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	init(t_data *data)
 	data->dine = _create_mutex_array(num);
 	if (data->dine == NULL)
 		return(E_ALLOC);
-    if (pthread_mutex_init(&data->pr.coffin_lock, NULL))
+    if (pthread_mutex_init(&data->pr.coffin_lock, NULL) != OK)
 		return(E_ALLOC);
 	return (OK);
 }
