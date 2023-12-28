@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 19:47:24 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/29 05:02:24 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/29 06:13:01 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,18 +78,20 @@ static int	_philo_eat(t_ph *philo)
 {
 	if (_philo_pick_up_fork(philo) != OK)
 		return (E_DEAD);
+	pthread_mutex_lock(philo->dine);
 	if (print_msg(philo, ACT_EAT) == E_DEAD)
 	{
+		pthread_mutex_unlock(philo->dine);
 		pthread_mutex_unlock(philo->second_fork);
 		pthread_mutex_unlock(philo->first_fork);
 		return (E_DEAD);
 	}
-	pthread_mutex_lock(philo->dine);
+	// pthread_mutex_lock(philo->dine);
 	philo->last_eat_time = get_current_time(NULL);
-	if (ft_millisleep(philo->pr->time_to_eat))
-		return (E_GETTIME);
 	philo->eat_times++;
 	pthread_mutex_unlock(philo->dine);
+	if (ft_millisleep(philo->pr->time_to_eat))
+		return (E_GETTIME);
 	pthread_mutex_unlock(philo->second_fork);
 	pthread_mutex_unlock(philo->first_fork);
 	if (philo->eat_times == philo->pr->min_times_to_eat)

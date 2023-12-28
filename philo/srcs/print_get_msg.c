@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 17:55:07 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/29 02:39:09 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/29 05:34:23 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ int	print_msg(t_ph *philo, const char *action)
 		return (E_DEAD);
 	}
 	printf("%ju %lld %s\n", time_stamp, philo->id, action);
-	if (action[0] != 'd')
-		pthread_mutex_unlock(&philo->pr->coffin_lock);
+	if (action[0] == 'd')
+		philo->pr->the_end_status = true;
+	pthread_mutex_unlock(&philo->pr->coffin_lock);
+	// if (action[0] != 'd')
+	// 	pthread_mutex_unlock(&philo->pr->coffin_lock);
 	return (OK);
 }

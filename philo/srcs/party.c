@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:18:37 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/29 04:40:43 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/29 06:10:21 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	register_philos(t_data *data)
 	i = 0;
 	while (i < (size_t)data->pr.num_philos)
 	{
+		data->philos[i].eat_times = 0;
 		data->philos[i].dine = &data->dine[i];
 		data->philos[i].id = i + 1;
 		data->philos[i].pr = &data->pr;
@@ -105,8 +106,8 @@ int	monitor_party(t_data *data)
 		if (get_current_time(NULL) - data->philos[i].last_eat_time > (t_time)data->pr.time_to_die)
 		{
 			print_msg(&data->philos[i], ACT_DEAD);
-			data->pr.the_end_status = true;
-			pthread_mutex_unlock(&data->pr.coffin_lock);
+			printf("LAST EAT: %ju\n", data->philos[i].last_eat_time - data->pr.start_time);
+			// data->pr.the_end_stak(&data->pr.coffin_lock);
 			pthread_mutex_unlock(data->philos[i].dine);
 			return (E_DEAD);
 		}
