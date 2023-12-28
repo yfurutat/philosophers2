@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:18:37 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/29 02:51:51 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/29 04:40:43 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,16 @@ void	register_philos(t_data *data)
 			fork_l = &data->forks[0];
 		else
 			fork_l = &data->forks[i + 1];
-		data->philos[i].first_fork = fork_r;
-		if (data->philos[i].id % 2 == 1)
+		if (data->philos[i].id % 2 == 0)
+		{
+			data->philos[i].first_fork = fork_r;
+			data->philos[i].second_fork = fork_l;
+		}
+		else if (data->philos[i].id % 2 == 1)
+		{
 			data->philos[i].first_fork = fork_l;
-		data->philos[i].second_fork = fork_l;
-		if (data->philos[i].id % 2 == 1)
 			data->philos[i].second_fork = fork_r;
+		}
 		i++;
 	}
 }
@@ -112,7 +116,10 @@ int	monitor_party(t_data *data)
 		i++;
 	}
 	if (full_bellies == data->pr.num_philos)
+	{
+		printf("FULL!!!!!!!!!!");
 		return (FULL);
+	}
 	return (OK);
 }
 

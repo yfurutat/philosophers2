@@ -6,13 +6,23 @@
 # 4. time_to_sleep
 # 5. number_of_times_each_philosopher_must_eat
 
-N_PHILOS="5"
+N_PHILOS="2"
 T_DIE="800"
 T_EAT="200"
-T_SLEEP="200"
-MIN_T_EAT="7"
+T_SLEEP="100"
+MIN_T_EAT="1"
 # T_EAT="100@"
 # T_EAT="opqij&"
+
+# ./philo 1 800 200 200
+# ./philo 5 800 200 200
+# ./philo 5 800 200 200
+# ./philo 4 410 200 200
+# ./philo 4 310 200 100
+
+# N_PHILOS="1" -> dies
+# N_PHILOS="5" -> dies
+# N_PHILOS="9" -> never gets full
 
 # N_PHILOS="2147483647"
 # T_DIE="2147483647"

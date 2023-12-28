@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 10:54:09 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/29 04:11:28 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/29 04:57:52 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ typedef struct s_param {
 	pthread_mutex_t	coffin_lock;
 	t_time 			start_time;
 }	t_param;
+	// bool			thread_err;
+	// pthread_mutex_t	for_thread_err;
 
 typedef struct s_philo {
 	long long		id;

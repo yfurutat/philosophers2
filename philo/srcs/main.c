@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 10:51:34 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/29 03:53:44 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/29 04:30:07 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	main(int argc, char **argv)
 		return (destroy_data(&data, ret));
 	while (ret == OK)
 		ret = monitor_party(&data);
-	if (ret != OK)
-		return (destroy_data(&data, ret));
+	// if (ret != OK && ret != FULL)
+	// 	return (destroy_data(&data, ret));
 	ret = join_the_line(data.threads, data.pr.num_philos);
 	return (destroy_data(&data, ret));
 }

@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 19:45:29 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/29 03:55:22 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/29 04:26:16 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	destroy_mutex_array(pthread_mutex_t *ptr, size_t num)
 
 static void	print_error(t_err code)
 {
-	ssize_t	ret;	
+	// ssize_t	ret;
     const char    *error_messages[] = {\
         [E_EMPTY] = "ERROR: EMPTY PARAMETER\n", \
 		[E_INVALID_ARGC] = "ERROR: INVALID_ARGC\n", \
@@ -76,15 +76,16 @@ static void	print_error(t_err code)
 		[E_DESTROY] = "ERROR: DESTRUCTION FAILED\n", \
 		[E_PRINT] = "ERROR: PRINT FAILED\n"};
 
-    ret = ft_putstr_fd(ANSI_BOLD_RED, STDERR_FILENO);
-	if (ret < 0)
-		print_error(E_PRINT);
-    ret = ft_putstr_fd(error_messages[code], STDERR_FILENO);
-	if (ret < 0)
-		print_error(E_PRINT);
-    ret = ft_putstr_fd(ANSI_RESET, STDERR_FILENO);
-	if (ret < 0)
-		print_error(E_PRINT);
+    // ret = ft_putstr_fd(ANSI_BOLD_RED, STDERR_FILENO);
+	// if (ret < 0)
+	// 	print_error(E_PRINT);
+    // ret = ft_putstr_fd(error_messages[code], STDERR_FILENO);
+    ft_putstr_fd(error_messages[code], STDERR_FILENO);
+	// if (ret < 0)
+	// 	print_error(E_PRINT);
+    // ret = ft_putstr_fd(ANSI_RESET, STDERR_FILENO);
+	// if (ret < 0)
+	// 	print_error(E_PRINT);
 }
 	// char	err_msg[10];
 	// 	err_msg = 
