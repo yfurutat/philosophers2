@@ -63,9 +63,17 @@ re				:	fclean all
 files			:	$(SRC_PATH) $(INC_PATH) $(UTILS_PATH)
 	@touch $(INC_PATH)philo.h $(SRC) $(UTILS)
 
+norm	:
+	@norminette $(INC_PATH)*.h $(SRC) $(UTILS)
+normd	:
+	@norminette -R CheckDefine $(INC_PATH)*.h $(SRC) $(UTILS)
+normf	:
+	@norminette -R CheckForbiddenSourceHeader $(INC_PATH)*.h $(SRC) $(UTILS)
+norma	:	norm normd normf
+
 commit			:
 	@$(MAKE) fclean
-	git add $(SRC) $(UTILS) Makefile $(INC_PATH)*.h test.sh output.txt
+	git add $(INC_PATH)*.h $(SRC) $(UTILS) Makefile test.sh philo_out.txt
 	git commit -m "commit through makefile"
 	git status
 
