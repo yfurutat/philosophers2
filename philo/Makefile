@@ -1,11 +1,11 @@
 NAME			:=	philo
 
 MAIN_FILE		:=	main.c \
-					act.c \
 					destroy.c \
 					init.c \
 					parse_args.c \
 					party.c \
+					philo_act.c \
 					print_get_msg.c
 
 UTIL_FILES		:=	ft_atoll.c \

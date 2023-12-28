@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 10:54:09 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 22:19:01 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/28 22:36:22 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int			party_over(t_data *data);
 
 int			parse_args(int argc, char **argv, t_param *pr); // complemental: 2
 int			init(t_data *data); // complemental: 1
-void		*act(void *param); // complemental: 4
+void		*philo_act(void *param); // complemental: 4
 
 // DESTROY
 void		destroy_mutex_array(pthread_mutex_t *ptr, size_t num);

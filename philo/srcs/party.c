@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:18:37 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 22:20:21 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/28 22:43:04 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ int	prep_party(int argc, char **argv, t_data *data)
 {
 	int	err_id;
 
-    memset(data, '\0', sizeof(t_data));
-    err_id = parse_args(argc, argv, &(data->pr));
+	memset(data, '\0', sizeof(t_data));
+	err_id = parse_args(argc, argv, &(data->pr));
 	if (err_id != OK)
 		return (err_id);
-    err_id = init(data);
+	err_id = init(data);
 	if (err_id != OK)
 		return (err_id);
-    data->pr.start_time = get_time_stamp(NULL);
+	data->pr.start_time = get_time_stamp(NULL);
 	return (err_id);
 }
 
@@ -38,8 +38,8 @@ int	start_party(t_data *data)
 	err_id = OK;
 	while (i < (size_t)data->pr.num_philos)
 	{
-    	data->philos[i].dine = &data->dine[i];
-    	data->philos[i].last_eat_time = data->pr.start_time;
+		data->philos[i].dine = &data->dine[i];
+		data->philos[i].last_eat_time = data->pr.start_time;
 		data->philos[i].id = i + 1;
 		data->philos[i].pr = &data->pr;
 		data->philos[i].fork_r = &data->forks[i];
@@ -47,7 +47,7 @@ int	start_party(t_data *data)
 			data->philos[i].fork_l = &data->forks[0];
 		else
 			data->philos[i].fork_l = &data->forks[i + 1];
-		err_id = pthread_create(&data->threads[i], NULL, act, &data->philos[i]);
+		err_id = pthread_create(&data->threads[i], NULL, philo_act, &data->philos[i]);
 		if (err_id != OK)
 			break ;
 		i++;
@@ -99,6 +99,6 @@ int	party_over(t_data *data)
 			break ;
 		i++;
 	}
-    destroy_data(data);
+	destroy_data(data);
 	return (err_id);
 }

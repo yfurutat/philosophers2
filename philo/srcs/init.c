@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 15:44:24 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 22:05:08 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/28 22:41:23 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static pthread_mutex_t	*_create_mutex_array(size_t num);
 // 18L
 int	init(t_data *data)
 {
-    size_t  num;
+	size_t  num;
 
-    num = (size_t)data->pr.num_philos;
+	num = (size_t)data->pr.num_philos;
 	data->philos = malloc(num * sizeof(t_ph));
 	if (data->philos == NULL)
 		return(E_ALLOC);
@@ -32,7 +32,7 @@ int	init(t_data *data)
 	data->dine = _create_mutex_array(num);
 	if (data->dine == NULL)
 		return(E_ALLOC);
-    if (pthread_mutex_init(&data->pr.coffin_lock, NULL) != OK)
+	if (pthread_mutex_init(&data->pr.coffin_lock, NULL) != OK)
 		return(E_ALLOC);
 	return (OK);
 }
@@ -52,7 +52,7 @@ static pthread_mutex_t	*_create_mutex_array(size_t num)
 	i = 0;
 	while (i < num)
 	{
-        err_id = pthread_mutex_init(&ptr[i], NULL);
+		err_id = pthread_mutex_init(&ptr[i], NULL);
 		if (err_id != OK)
 		{
 			destroy_mutex_array(ptr, i);

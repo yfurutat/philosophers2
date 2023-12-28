@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 17:55:07 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 22:07:39 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/28 22:34:35 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ time_t	get_time_stamp(int *err_ptr)
 	err_id = gettimeofday(&tp, NULL);
 	if (err_ptr)
 		*err_ptr = err_id;
-	if (err_id)
+	if (err_id != OK)
 		return (UINTMAX_MAX);
 	return((tp.tv_usec / 1000) + (tp.tv_sec * 1000));
 }
