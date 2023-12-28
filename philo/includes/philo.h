@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 10:54:09 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 22:36:22 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/29 04:11:28 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@
 # define ACT_SLEEP "is sleeping"
 # define ACT_THINK "is thinking"
 # define ACT_DEAD "died"
+# define ANSI_BOLD_RED "\x1b[1;31m"
+# define ANSI_RESET "\x1b[0m"
 
 /*
 	TYPEDEF
@@ -66,8 +68,8 @@ typedef struct s_philo {
 	long long		eat_times;
 	t_time			last_eat_time;
 	pthread_mutex_t	*dine;
-	pthread_mutex_t	*fork_r;
-	pthread_mutex_t	*fork_l;
+	pthread_mutex_t	*first_fork;
+	pthread_mutex_t	*second_fork;
 	t_param			*pr;
 }	t_ph;
 
@@ -81,48 +83,55 @@ typedef struct s_data {
 
 typedef enum e_error {
 	OK = 0,
-	E_EMPTY = -1,
-	E_INVALID_ARGC = -2,
-	E_NONDIGIT = -3,
-	E_INVALID_LEN = -4,
-	E_INVALID_VALUE = -5,
-	E_ALLOC = -6,
-	E_INITF = -7,
-	E_DEAD = -8,
-	FULL = -9,
+	FULL,
+	E_EMPTY,
+	E_INVALID_ARGC,
+	E_NONDIGIT,
+	E_INVALID_LEN,
+	E_INVALID_VALUE,
+	E_ALLOC,
+	E_INITF,
+	E_GETTIME,
+	E_PTHREAD_CREATE,
+	E_DEAD,
+	E_DESTROY,
+	E_PRINT,
 }	t_err;
 
-typedef enum e_atol {
-	FLOW = 1,
-}	t_atol;
+// typedef enum e_atol {
+// 	FLOW = 1,
+// }	t_atol;
 
 /*
 	FUNCTIONS
 */
 
 int			prep_party(int argc, char **argv, t_data *data);
+void		register_philos(t_data *data);
 int			start_party(t_data *data);
 int			monitor_party(t_data *data);
-int			party_over(t_data *data);
+int			join_the_line(pthread_t *threads, size_t num);
 
 int			parse_args(int argc, char **argv, t_param *pr); // complemental: 2
 int			init(t_data *data); // complemental: 1
 void		*philo_act(void *param); // complemental: 4
 
 // DESTROY
-void		destroy_mutex_array(pthread_mutex_t *ptr, size_t num);
-int			destroy_data(t_data *data);
+int			destroy_mutex_array(pthread_mutex_t *ptr, size_t num);
+int			destroy_data(t_data *data, t_err code);
 
 int			print_msg(t_ph *philo, const char *action);
-time_t		get_time_stamp(int *err_ptr);
+t_time		get_current_time(int *err_ptr);
 
 // UTILS
+int			sleep_until(t_time finish_time);
+int			ft_millisleep(t_time sleep_time);
 int			ft_isspace(int chr);
 int			ft_isdigit(int chr);
 int			ft_aredigit_strs(char **strs);
 long long	ft_atoll(const char *str);
-
+ssize_t		ft_strlen(const char *str);
+ssize_t		ft_putstr_fd(const char *str, int fd);
 // bool		ft_isdigit_str(char *str);
-// size_t	ft_strlen(const char *str);
 
 #endif

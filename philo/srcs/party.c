@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:18:37 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 22:43:04 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/29 02:51:51 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,39 @@ int	prep_party(int argc, char **argv, t_data *data)
 	err_id = init(data);
 	if (err_id != OK)
 		return (err_id);
-	data->pr.start_time = get_time_stamp(NULL);
+	register_philos(data);
 	return (err_id);
 }
 
-// 22L
+// 23L
+void	register_philos(t_data *data)
+{
+	size_t			i;
+	pthread_mutex_t	*fork_r;
+	pthread_mutex_t	*fork_l;
+
+	i = 0;
+	while (i < (size_t)data->pr.num_philos)
+	{
+		data->philos[i].dine = &data->dine[i];
+		data->philos[i].id = i + 1;
+		data->philos[i].pr = &data->pr;
+		fork_r = &data->forks[i];
+		if (i + 1 == (size_t)data->pr.num_philos)
+			fork_l = &data->forks[0];
+		else
+			fork_l = &data->forks[i + 1];
+		data->philos[i].first_fork = fork_r;
+		if (data->philos[i].id % 2 == 1)
+			data->philos[i].first_fork = fork_l;
+		data->philos[i].second_fork = fork_l;
+		if (data->philos[i].id % 2 == 1)
+			data->philos[i].second_fork = fork_r;
+		i++;
+	}
+}
+
+// 25L
 int	start_party(t_data *data)
 {
 	size_t	i;
@@ -36,23 +64,26 @@ int	start_party(t_data *data)
 
 	i = 0;
 	err_id = OK;
+	data->pr.start_time = get_current_time(&err_id) + 1000;
+	if (err_id != OK)
+		return (E_GETTIME);
+	pthread_mutex_lock(&data->pr.coffin_lock);
 	while (i < (size_t)data->pr.num_philos)
 	{
-		data->philos[i].dine = &data->dine[i];
 		data->philos[i].last_eat_time = data->pr.start_time;
-		data->philos[i].id = i + 1;
-		data->philos[i].pr = &data->pr;
-		data->philos[i].fork_r = &data->forks[i];
-		if (i + 1 == (size_t)data->pr.num_philos)
-			data->philos[i].fork_l = &data->forks[0];
-		else
-			data->philos[i].fork_l = &data->forks[i + 1];
-		err_id = pthread_create(&data->threads[i], NULL, philo_act, &data->philos[i]);
-		if (err_id != OK)
-			break ;
+		if (pthread_create(&data->threads[i], NULL, philo_act, \
+			&data->philos[i]) != OK)
+		{
+			data->pr.the_end_status = true;
+			pthread_mutex_unlock(&data->pr.coffin_lock);
+			join_the_line(data->threads, i);
+			return (E_PTHREAD_CREATE);
+		}
 		i++;
 	}
-	return (err_id);
+	pthread_mutex_unlock(&data->pr.coffin_lock);
+	sleep_until(data->pr.start_time);
+	return (OK);
 }
 
 	// while (1)
@@ -67,7 +98,7 @@ int	monitor_party(t_data *data)
 	while (i < (size_t)data->pr.num_philos)
 	{
 		pthread_mutex_lock(data->philos[i].dine);
-		if (get_time_stamp(NULL) - data->philos[i].last_eat_time > (t_time)data->pr.time_to_die)
+		if (get_current_time(NULL) - data->philos[i].last_eat_time > (t_time)data->pr.time_to_die)
 		{
 			print_msg(&data->philos[i], ACT_DEAD);
 			data->pr.the_end_status = true;
@@ -85,20 +116,19 @@ int	monitor_party(t_data *data)
 	return (OK);
 }
 
-// 13L
-int	party_over(t_data *data)
+// 12L
+int	join_the_line(pthread_t *threads, size_t num)
 {
 	size_t	i;
 	int		err_id;
 
 	i = 0;
-	while (i < (size_t)data->pr.num_philos)
+	while (i < num)
 	{
-		err_id = pthread_join(data->threads[i], NULL);
+		err_id = pthread_join(threads[i], NULL);
 		if (err_id != OK)
 			break ;
 		i++;
 	}
-	destroy_data(data);
 	return (err_id);
 }

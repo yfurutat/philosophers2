@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 19:47:24 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 22:40:34 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/29 02:09:21 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,27 @@ static int	_philo_eat(t_ph *philo);
 static int	_philo_sleep(t_ph *philo);
 static int	_philo_think(t_ph *philo);
 
+int	wait_until_start_time(t_ph *philo)
+{
+	pthread_mutex_lock(&philo->pr->coffin_lock);
+	if (philo->pr->the_end_status == true)
+	{
+		pthread_mutex_unlock(&philo->pr->coffin_lock);
+		return (E_DEAD);
+	}
+	pthread_mutex_unlock(&philo->pr->coffin_lock);
+	sleep_until(philo->pr->start_time);
+	return (OK);
+}
+
 // 13L
 void *philo_act(void *param)
 {
 	t_ph *philo;
 
 	philo = (t_ph *)param;
+	if (wait_until_start_time(philo) != OK)
+		return (NULL);
 	while (1)
 	{
 		if (_philo_eat(philo))
@@ -35,54 +50,56 @@ void *philo_act(void *param)
 	return (NULL);
 }
 
-// 14L
+// 23L
 static int	_philo_pick_up_fork(t_ph *philo)
 {
-	pthread_mutex_lock(philo->fork_r);
-	if (print_msg(philo, ACT_FORK) == E_DEAD)
+	pthread_mutex_lock(philo->first_fork);
+	if (print_msg(philo, ACT_FORK) == E_DEAD || philo->pr->num_philos == 1)
 	{
-		pthread_mutex_unlock(philo->fork_r);
+		pthread_mutex_unlock(philo->first_fork);
 		return (E_DEAD);
 	}
-	pthread_mutex_lock(philo->fork_l);
+	pthread_mutex_lock(philo->second_fork);
 	if (print_msg(philo, ACT_FORK) == E_DEAD)
 	{
-		pthread_mutex_unlock(philo->fork_l);
-		pthread_mutex_unlock(philo->fork_r);
+		pthread_mutex_unlock(philo->second_fork);
+		pthread_mutex_unlock(philo->first_fork);
 		return (E_DEAD);
-	}	
+	}
 	return (OK);
 }
 
-// 18L
+// 19L
 static int	_philo_eat(t_ph *philo)
 {
 	if (_philo_pick_up_fork(philo) != OK)
 		return (E_DEAD);
 	if (print_msg(philo, ACT_EAT) == E_DEAD)
 	{
-		pthread_mutex_unlock(philo->fork_l);
-		pthread_mutex_unlock(philo->fork_r);
+		pthread_mutex_unlock(philo->second_fork);
+		pthread_mutex_unlock(philo->first_fork);
 		return (E_DEAD);
 	}
 	pthread_mutex_lock(philo->dine);
-	philo->last_eat_time = get_time_stamp(NULL);
-	usleep(philo->pr->time_to_eat * 1000);
+	philo->last_eat_time = get_current_time(NULL);
+	if (ft_millisleep(philo->pr->time_to_eat))
+		return (E_GETTIME);
 	philo->eat_times++;
 	pthread_mutex_unlock(philo->dine);
-	pthread_mutex_unlock(philo->fork_l);
-	pthread_mutex_unlock(philo->fork_r);
+	pthread_mutex_unlock(philo->second_fork);
+	pthread_mutex_unlock(philo->first_fork);
 	if (philo->eat_times == philo->pr->min_times_to_eat)
 		return (FULL);
 	return (OK);
 }
 
-// 4L
+// 5L
 static int	_philo_sleep(t_ph *philo)
 {
 	if (print_msg(philo, ACT_SLEEP) == E_DEAD)
 		return (E_DEAD);
-	usleep(philo->pr->time_to_sleep * 1000);
+	if (ft_millisleep(philo->pr->time_to_sleep))
+		return (E_GETTIME);
 	return (OK);
 }
 

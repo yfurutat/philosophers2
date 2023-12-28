@@ -6,7 +6,7 @@
 # 4. time_to_sleep
 # 5. number_of_times_each_philosopher_must_eat
 
-N_PHILOS="200"
+N_PHILOS="5"
 T_DIE="800"
 T_EAT="200"
 T_SLEEP="200"

@@ -6,7 +6,7 @@
 /*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 10:51:34 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 22:32:44 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/29 03:53:44 by efmacm23         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,46 @@ int	main(int argc, char **argv)
 
 	ret = prep_party(argc, argv, &data);
 	if (ret != OK)
-	{
-		destroy_data(&data);
-		return (ret);
-	}
+		return (destroy_data(&data, ret));
 	ret = start_party(&data);
 	if (ret != OK)
-	{
-		destroy_data(&data);
-		return (ret);
-	}
-	usleep(300);
+		return (destroy_data(&data, ret));
 	while (ret == OK)
 		ret = monitor_party(&data);
-	ret = party_over(&data);
-	return (ret);
+	if (ret != OK)
+		return (destroy_data(&data, ret));
+	ret = join_the_line(data.threads, data.pr.num_philos);
+	return (destroy_data(&data, ret));
 }
+
+// int	main(int argc, char **argv)
+// {
+// 	t_data	data;
+// 	int		ret;
+
+// 	ret = prep_party(argc, argv, &data);
+// 	if (ret != OK)
+// 	{
+// 		ret = destroy_data(&data);
+// 		return (ret);
+// 	}
+// 	ret = start_party(&data);
+// 	if (ret != OK)
+// 	{
+// 		ret = destroy_data(&data);
+// 		return (ret);
+// 	}
+// 	while (ret == OK)
+// 		ret = monitor_party(&data);
+// 	ret = join_the_line(data.threads, data.pr.num_philos);
+// 	if (ret != OK)
+// 	{
+// 		ret = destroy_data(&data);
+// 		return (ret);
+// 	}
+// 	ret = destroy_data(&data);
+// 	return (ret);
+// }
 
 // __attribute__((destructor))
 // static void	destructor()
