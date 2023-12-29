@@ -17,23 +17,10 @@ static int	_philo_eat(t_ph *philo);
 static int	_philo_sleep(t_ph *philo);
 static int	_philo_think(t_ph *philo);
 
-int	wait_until_start_time(t_ph *philo)
-{
-	pthread_mutex_lock(&philo->pr->coffin_lock);
-	if (philo->pr->the_end_status == true)
-	{
-		pthread_mutex_unlock(&philo->pr->coffin_lock);
-		return (E_DEAD);
-	}
-	pthread_mutex_unlock(&philo->pr->coffin_lock);
-	sleep_until(philo->pr->start_time);
-	return (OK);
-}
-
 // 13L
-void *philo_act(void *param)
+void	*philo_act(void *param)
 {
-	t_ph *philo;
+	t_ph	*philo;
 
 	philo = (t_ph *)param;
 	if (wait_until_start_time(philo) != OK)
@@ -86,7 +73,6 @@ static int	_philo_eat(t_ph *philo)
 		pthread_mutex_unlock(philo->first_fork);
 		return (E_DEAD);
 	}
-	// pthread_mutex_lock(philo->dine);
 	philo->last_eat_time = get_current_time(NULL);
 	philo->eat_times++;
 	pthread_mutex_unlock(philo->dine);

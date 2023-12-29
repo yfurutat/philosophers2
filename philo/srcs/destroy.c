@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static void    print_error(t_err code);
+static void	print_error(t_err code);
 
 	// errno = OK;
 // 11L
@@ -59,11 +59,11 @@ int	destroy_mutex_array(pthread_mutex_t *ptr, size_t num)
 	return (err_id);
 }
 
+	// ssize_t	ret;
 static void	print_error(t_err code)
 {
-	// ssize_t	ret;
-    const char    *error_messages[] = {\
-        [E_EMPTY] = "ERROR: EMPTY PARAMETER\n", \
+	const char	*error_messages[] = {\
+		[E_EMPTY] = "ERROR: EMPTY PARAMETER\n", \
 		[E_INVALID_ARGC] = "ERROR: INVALID_ARGC\n", \
 		[E_NONDIGIT] = "ERROR: NON-DIGIT ARGV\n", \
 		[E_INVALID_LEN] = "ERROR: INVALID LENGTH\n", \
@@ -76,17 +76,17 @@ static void	print_error(t_err code)
 		[E_DESTROY] = "ERROR: DESTRUCTION FAILED\n", \
 		[E_PRINT] = "ERROR: PRINT FAILED\n"};
 
-    // ret = ft_putstr_fd(ANSI_BOLD_RED, STDERR_FILENO);
-	// if (ret < 0)
-	// 	print_error(E_PRINT);
-    // ret = ft_putstr_fd(error_messages[code], STDERR_FILENO);
-    ft_putstr_fd(error_messages[code], STDERR_FILENO);
-	// if (ret < 0)
-	// 	print_error(E_PRINT);
-    // ret = ft_putstr_fd(ANSI_RESET, STDERR_FILENO);
-	// if (ret < 0)
-	// 	print_error(E_PRINT);
+	ft_putstr_fd(error_messages[code], STDERR_FILENO);
 }
+	// ret = ft_putstr_fd(ANSI_BOLD_RED, STDERR_FILENO);
+	// if (ret < 0)
+	// 	print_error(E_PRINT);
+	// ret = ft_putstr_fd(error_messages[code], STDERR_FILENO);
+	// if (ret < 0)
+	// 	print_error(E_PRINT);
+	// ret = ft_putstr_fd(ANSI_RESET, STDERR_FILENO);
+	// if (ret < 0)
+	// 	print_error(E_PRINT);
 	// char	err_msg[10];
 	// 	err_msg = 
 // int	print_err_msg(int err_id)

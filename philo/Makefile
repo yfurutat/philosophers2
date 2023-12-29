@@ -3,14 +3,16 @@ NAME			:=	philo
 MAIN_FILE		:=	main.c \
 					destroy.c \
 					init.c \
+					observe_party.c \
 					parse_args.c \
-					party.c \
 					philo_act.c \
-					print_get_msg.c
+					prep_party.c \
+					start_party.c 
 
 UTIL_FILES		:=	ft_atoll.c \
 					ft_isdigit.c \
-					utils.c
+					print_str.c \
+					time_wait_sleep.c
 
 SRC_PATH		:=	./srcs/
 OBJ_PATH		:=	./objs/
@@ -24,8 +26,8 @@ UTILS_OBJ		=	$(addprefix $(OBJ_PATH), $(UTIL_FILES:.c=.o))
 
 CC				:=	cc
 # CFLAGS			:=	-Wall -Wextra -Werror -MMD -g -pthread -fsanitize=address -Iincludes 
-CFLAGS			:=	-Wall -Wextra -Werror -MMD -g -pthread -fsanitize=thread -Iincludes 
-# CFLAGS			:=	-Wall -Wextra -Werror -MMD -g -pthread -Iincludes 
+# CFLAGS			:=	-Wall -Wextra -Werror -MMD -g -pthread -fsanitize=thread -Iincludes 
+CFLAGS			:=	-Wall -Wextra -Werror -MMD -g -pthread -Iincludes 
 RM				:=	rm -fr
 
 all				:	$(NAME)
@@ -61,6 +63,15 @@ fclean			:	clean
 
 re				:	fclean all
 
+sall			:
+	@$(MAKE) -s all
+
+sclean			:
+	@$(MAKE) -s fclean
+
+sre				:	sclean sall
+	@echo "\nSILENT MAKE SUCCESSFULLY DONE\n"
+
 files			:	$(SRC_PATH) $(INC_PATH) $(UTILS_PATH)
 	@touch $(INC_PATH)philo.h $(SRC) $(UTILS)
 
@@ -78,4 +89,6 @@ commit			:
 	git commit -m "commit through makefile"
 	git status
 
-.PHONY			:	all clean fclean re files commit
+.PHONY			:	all clean fclean re \
+					sall sclean sre files commit \
+					norm normd normf norma

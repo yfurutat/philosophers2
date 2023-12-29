@@ -21,7 +21,7 @@ int	parse_args(int argc, char **argv, t_param *pr)
 	int	err_id;
 
 	if (argc != 5 && argc != 6)
-		return (E_INVALID_ARGC);	
+		return (E_INVALID_ARGC);
 	err_id = ft_aredigit_strs(argv);
 	if (err_id != OK)
 		return (err_id);

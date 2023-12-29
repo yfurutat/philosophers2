@@ -17,23 +17,23 @@ static pthread_mutex_t	*_create_mutex_array(size_t num);
 // 18L
 int	init(t_data *data)
 {
-	size_t  num;
+	size_t	num;
 
 	num = (size_t)data->pr.num_philos;
 	data->philos = malloc(num * sizeof(t_ph));
 	if (data->philos == NULL)
-		return(E_ALLOC);
+		return (E_ALLOC);
 	data->threads = malloc(num * sizeof(pthread_t));
 	if (data->threads == NULL)
-		return(E_ALLOC);
+		return (E_ALLOC);
 	data->forks = _create_mutex_array(num);
 	if (data->forks == NULL)
-		return(E_ALLOC);
+		return (E_ALLOC);
 	data->dine = _create_mutex_array(num);
 	if (data->dine == NULL)
-		return(E_ALLOC);
+		return (E_ALLOC);
 	if (pthread_mutex_init(&data->pr.coffin_lock, NULL) != OK)
-		return(E_ALLOC);
+		return (E_ALLOC);
 	return (OK);
 }
 
@@ -48,7 +48,7 @@ static pthread_mutex_t	*_create_mutex_array(size_t num)
 		return (NULL);
 	ptr = malloc(num * sizeof(pthread_mutex_t));
 	if (ptr == NULL)
-		return(NULL);
+		return (NULL);
 	i = 0;
 	while (i < num)
 	{

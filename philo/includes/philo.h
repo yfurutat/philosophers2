@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yfurutat <yfurutat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 10:54:09 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/29 04:57:52 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/29 18:21:26 by yfurutat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@
 	TYPEDEF
 */
 
-typedef uintmax_t t_time;
+typedef uintmax_t	t_time;
 
 typedef struct s_param {
 	long long		num_philos;
@@ -60,7 +60,7 @@ typedef struct s_param {
 	long long		min_times_to_eat;
 	bool			the_end_status;
 	pthread_mutex_t	coffin_lock;
-	t_time 			start_time;
+	t_time			start_time;
 }	t_param;
 	// bool			thread_err;
 	// pthread_mutex_t	for_thread_err;
@@ -109,9 +109,8 @@ typedef enum e_error {
 */
 
 int			prep_party(int argc, char **argv, t_data *data);
-void		register_philos(t_data *data);
 int			start_party(t_data *data);
-int			monitor_party(t_data *data);
+int			observe_party(t_data *data);
 int			join_the_line(pthread_t *threads, size_t num);
 
 int			parse_args(int argc, char **argv, t_param *pr); // complemental: 2
@@ -126,6 +125,7 @@ int			print_msg(t_ph *philo, const char *action);
 t_time		get_current_time(int *err_ptr);
 
 // UTILS
+int			wait_until_start_time(t_ph *philo);
 int			sleep_until(t_time finish_time);
 int			ft_millisleep(t_time sleep_time);
 int			ft_isspace(int chr);
