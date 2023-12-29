@@ -6,14 +6,12 @@
 /*   By: yfurutat <yfurutat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:52:53 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/29 18:53:43 by yfurutat         ###   ########.fr       */
+/*   Updated: 2023/12/29 20:08:31 by yfurutat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-	// if (action[0] != 'd')
-	// 	pthread_mutex_unlock(&philo->pr->coffin_lock);
 // 13L
 int	print_msg(t_ph *philo, const char *action)
 {

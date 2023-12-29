@@ -6,7 +6,7 @@
 /*   By: yfurutat <yfurutat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 10:54:09 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/29 18:21:26 by yfurutat         ###   ########.fr       */
+/*   Updated: 2023/12/29 20:35:06 by yfurutat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,18 @@
 # define ACT_DEAD "died"
 # define ANSI_BOLD_RED "\x1b[1;31m"
 # define ANSI_RESET "\x1b[0m"
+
+// # define EMP_PARAM "EMPTY PARAMETER\n"
+// # define INV_ARGC "INVALID_ARGC\n"
+// # define INV_ARGV "NON-DIGIT ARGV\n"
+// # define INV_LEN "INVALID LENGTH\n"
+// # define INV_VAL "INVALID VALUE\n"
+// # define F_ALLOC "ALLOCATION FAILED\n"
+// # define F_INIT "INITIALIZATION FAILED\n"
+// # define F_TIME "GETTIME FAILED\n"
+// # define F_PTCREAT "PTHREAD CREATION FAILED\n"
+// # define PHIL_DEAD "A PHILOSOPHER DIED\n"
+// # define F_DEST "DESTRUCTION FAILED\n"
 
 /*
 	TYPEDEF
@@ -95,14 +107,11 @@ typedef enum e_error {
 	E_INITF,
 	E_GETTIME,
 	E_PTHREAD_CREATE,
+	E_PTHREAD_JOIN,
 	E_DEAD,
 	E_DESTROY,
 	E_PRINT,
 }	t_err;
-
-// typedef enum e_atol {
-// 	FLOW = 1,
-// }	t_atol;
 
 /*
 	FUNCTIONS
@@ -134,6 +143,5 @@ int			ft_aredigit_strs(char **strs);
 long long	ft_atoll(const char *str);
 ssize_t		ft_strlen(const char *str);
 ssize_t		ft_putstr_fd(const char *str, int fd);
-// bool		ft_isdigit_str(char *str);
 
 #endif

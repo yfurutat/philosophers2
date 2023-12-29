@@ -3,25 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   destroy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yfurutat <yfurutat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 19:45:29 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/29 04:26:16 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/29 20:06:44 by yfurutat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	print_error(t_err code);
+static int	print_error(t_err code);
+// static void	print_error(t_err code);
+// static int	print_error(int err_id);
+// static char	*what_error(int err_id);
 
 	// errno = OK;
-// 11L
+// 17L
 int	destroy_data(t_data *data, t_err code)
 {
 	int		ret;
 
-	print_error(code);
-	ret = OK;
+	ret = print_error(code);
 	if (data)
 	{
 		if (data->philos)
@@ -34,11 +36,11 @@ int	destroy_data(t_data *data, t_err code)
 			ret = destroy_mutex_array(data->dine, (size_t)data->pr.num_philos);
 	}
 	if (ret != OK)
-		print_error(E_DESTROY);
+		ret = print_error(E_DESTROY);
 	return (ret);
 }
 
-// 11L
+// 16L
 int	destroy_mutex_array(pthread_mutex_t *ptr, size_t num)
 {
 	size_t	i;
@@ -59,8 +61,9 @@ int	destroy_mutex_array(pthread_mutex_t *ptr, size_t num)
 	return (err_id);
 }
 
-	// ssize_t	ret;
-static void	print_error(t_err code)
+// 24L
+// static void	print_error(t_err code)
+static int	print_error(t_err code)
 {
 	const char	*error_messages[] = {\
 		[E_EMPTY] = "ERROR: EMPTY PARAMETER\n", \
@@ -76,46 +79,68 @@ static void	print_error(t_err code)
 		[E_DESTROY] = "ERROR: DESTRUCTION FAILED\n", \
 		[E_PRINT] = "ERROR: PRINT FAILED\n"};
 
-	ft_putstr_fd(error_messages[code], STDERR_FILENO);
+	if (code != OK && code != FULL)
+	{
+		if (ft_putstr_fd(ANSI_BOLD_RED, STDERR_FILENO) < 0)
+			return (print_error(E_PRINT));
+		if (ft_putstr_fd(error_messages[code], STDERR_FILENO) < 0)
+			return (print_error(E_PRINT));
+		if (ft_putstr_fd(ANSI_RESET, STDERR_FILENO) < 0)
+			return (print_error(E_PRINT));
+	}
+	return (OK);
 }
-	// ret = ft_putstr_fd(ANSI_BOLD_RED, STDERR_FILENO);
-	// if (ret < 0)
-	// 	print_error(E_PRINT);
-	// ret = ft_putstr_fd(error_messages[code], STDERR_FILENO);
-	// if (ret < 0)
-	// 	print_error(E_PRINT);
-	// ret = ft_putstr_fd(ANSI_RESET, STDERR_FILENO);
-	// if (ret < 0)
-	// 	print_error(E_PRINT);
-	// char	err_msg[10];
-	// 	err_msg = 
-// int	print_err_msg(int err_id)
-// {
-// 	int	ret;
+	// ft_putstr_fd(error_messages[code], STDERR_FILENO);
 
-// 	ft_putstr_fd(ANSI_BOLD_RED);
-// 	if (err_id == E_EMPTY)
-// 		ret = printf("ERROR: EMPTY PARAMETER\n");
-// 	if (err_id == E_INVALID_ARGC)
-// 		ret = printf("ERROR: INVALID_ARGC\n");
-// 	if (err_id == E_NONDIGIT)
-// 		ret = printf("ERROR: NON-DIGIT ARGV\n");
-// 	if (err_id == E_INVALID_LEN)
-// 		ret = printf("ERROR: INVALID LENGTH\n");
-// 	if (err_id == E_INVALID_VALUE)
-// 		ret = printf("ERROR: INVALID VALUE\n");
-// 	if (err_id == E_ALLOC)
-// 		ret = printf("ERROR: ALLOCATION FAILED\n");
-// 	if (err_id == E_INITF)
-// 		ret = printf("ERROR: INITIALIZATION FAILED\n");
-// 	if (err_id == E_GETTIME)
-// 		ret = printf("ERROR: GETTIME FAILED\n");
-// 	if (err_id == E_PTHREAD_CREATE)
-// 		ret = printf("ERROR: PTHREAD CREATION FAILED\n");
-// 	if (err_id == E_DEAD)
-// 		ret = printf("ERROR: A PHILOSOPHER DIED\n");
-// 	if (err_id == E_DESTROY)
-// 		ret = printf("ERROR: DESTRUCTION FAILED\n");
+// // 18L
+// static int	print_error(int err_id)
+// {
+// 	int			ret;
+// 	const char	*str = what_error(err_id);
+
+// 	if (err_id == OK || err_id == FULL)
+// 		return (OK);
+// 	ret = ft_putstr_fd(ANSI_BOLD_RED, STDERR_FILENO);
 // 	if (ret < 0)
-// 		ret = print_err_msg
+// 		return (print_error(err_id));
+// 	ret = ft_putstr_fd("ERROR: ", STDERR_FILENO);
+// 	if (ret < 0)
+// 		return (print_error(err_id));
+// 	ret = ft_putstr_fd(str, STDERR_FILENO);
+// 	if (ret < 0)
+// 		return (print_error(err_id));
+// 	ret = ft_putstr_fd(ANSI_RESET, STDERR_FILENO);
+// 	if (ret < 0)
+// 		return (print_error(err_id));
+// 	return (OK);
+// }
+
+// // 25L
+// static char	*what_error(int err_id)
+// {
+// 	if (err_id == E_EMPTY)
+// 		return ("EMPTY PARAMETER\n");
+// 	else if (err_id == E_INVALID_ARGC)
+// 		return ("INVALID_ARGC\n");
+// 	else if (err_id == E_NONDIGIT)
+// 		return ("NON-DIGIT ARGV\n");
+// 	else if (err_id == E_INVALID_LEN)
+// 		return ("INVALID LENGTH\n");
+// 	else if (err_id == E_INVALID_VALUE)
+// 		return ("INVALID VALUE\n");
+// 	else if (err_id == E_ALLOC)
+// 		return ("ALLOCATION FAILED\n");
+// 	else if (err_id == E_INITF)
+// 		return ("INITIALIZATION FAILED\n");
+// 	else if (err_id == E_GETTIME)
+// 		return ("GETTIME FAILED\n");
+// 	else if (err_id == E_PTHREAD_CREATE)
+// 		return ("PTHREAD CREATION FAILED\n");
+// 	else if (err_id == E_DEAD)
+// 		return ("A PHILOSOPHER HAS DIED\n");
+// 	else if (err_id == E_DESTROY)
+// 		return ("DESTRUCTION FAILED\n");
+// 	else if (err_id == E_PRINT)
+// 		return ("PRINT FAILED\n");
+// 	return ("NO ERROR...ACTUALLY\n");
 // }

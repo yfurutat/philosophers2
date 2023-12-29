@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efmacm23 <efmacm23@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yfurutat <yfurutat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 13:46:08 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/28 22:16:53 by efmacm23         ###   ########.fr       */
+/*   Updated: 2023/12/29 18:59:56 by yfurutat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_isspace(int chr)
-{
-	return ((chr >= '\t' && chr <= '\r') || chr == ' ');
-}
+// int	ft_isspace(int chr)
+// {
+// 	return ((chr >= '\t' && chr <= '\r') || chr == ' ');
+// }
 
 int	ft_isdigit(int chr)
 {

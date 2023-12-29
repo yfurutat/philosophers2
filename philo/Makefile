@@ -25,8 +25,8 @@ UTILS			=	$(addprefix $(UTILS_PATH), $(UTIL_FILES))
 UTILS_OBJ		=	$(addprefix $(OBJ_PATH), $(UTIL_FILES:.c=.o))
 
 CC				:=	cc
-# CFLAGS			:=	-Wall -Wextra -Werror -MMD -g -pthread -fsanitize=address -Iincludes 
 # CFLAGS			:=	-Wall -Wextra -Werror -MMD -g -pthread -fsanitize=thread -Iincludes 
+# CFLAGS			:=	-Wall -Wextra -Werror -MMD -g -pthread -fsanitize=address -Iincludes 
 CFLAGS			:=	-Wall -Wextra -Werror -MMD -g -pthread -Iincludes 
 RM				:=	rm -fr
 

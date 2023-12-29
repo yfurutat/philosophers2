@@ -6,7 +6,7 @@
 /*   By: yfurutat <yfurutat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 21:18:37 by efmacm23          #+#    #+#             */
-/*   Updated: 2023/12/29 18:53:01 by yfurutat         ###   ########.fr       */
+/*   Updated: 2023/12/29 20:46:27 by yfurutat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,38 @@
 
 static int	monitor_dine(t_data *data);
 
-	// while (1)
-	// size_t		i;
-	// i = 0;
-// 14L
+
+// 8L
 int	observe_party(t_data *data)
 {
 	long long	full_bellies;
 
 	full_bellies = monitor_dine(data);
 	if (full_bellies == -1)
-	{
-		printf("DEAD!!!!!!!!!!");
 		return (E_DEAD);
-	}
 	else if (full_bellies == data->pr.num_philos)
-	{
-		printf("FULL!!!!!!!!!!");
 		return (FULL);
-	}
 	return (OK);
 }
+	// while (1)
+	// size_t		i;
+	// i = 0;
+	// {
+	// 	printf("FULL!!!!!!!!!!");
+	// 	return (FULL);
+	// }
+	// {
+	// 	printf("DEAD!!!!!!!!!!");
+	// 	return (E_DEAD);
+	// }
 
 	// long long	full_bellies;
 	// full_bellies = 0;
 // 23L
 static int	monitor_dine(t_data *data)
 {
-	size_t	i;
-	int		cnt;
+	size_t		i;
+	long long	cnt;
 
 	i = 0;
 	cnt = 0;
@@ -65,7 +68,6 @@ static int	monitor_dine(t_data *data)
 	}
 	return (cnt);
 }
-			// data->pr.the_end_stak(&data->pr.coffin_lock);
 
 // 12L
 int	join_the_line(pthread_t *threads, size_t num)
